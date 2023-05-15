@@ -2,7 +2,18 @@ DROP DATABASE IF EXISTS capstone_backend;
 CREATE DATABASE capstone_backend;
 
 \c capstone_backend;
-CREATE TABLE test (name TEXT);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    stytch_id TEXT NOT NULL, 
+    first_name TEXT NOT NULL,
+    middle_name TEXT, 
+    last_name TEXT NOT NULL, 
+    username TEXT NOT NULL, 
+    about_me TEXT,
+    interests TEXT ARRAY,
+    intra_extraversion INT DEFAULT 50
+);
 
 CREATE TABLE events (
     id INT PRIMARY KEY,
