@@ -9,10 +9,11 @@ CREATE TABLE users (
     first_name TEXT NOT NULL,
     middle_name TEXT, 
     last_name TEXT NOT NULL, 
-    username TEXT NOT NULL, 
+    username TEXT NOT NULL,
     about_me TEXT,
     interests TEXT ARRAY,
-    intra_extraversion INT DEFAULT 50
+    intra_extraversion INT DEFAULT 50,
+    phone_number TEXT DEFAULT '0000000000'
 );
 
 CREATE TABLE events (
