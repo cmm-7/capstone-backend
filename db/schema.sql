@@ -13,7 +13,7 @@ CREATE TABLE users (
     about_me TEXT,
     interests TEXT ARRAY,
     intra_extraversion INT DEFAULT 50,
-    phone_number CHAR(10) DEFAULT 0000000000
+    phone_number TEXT DEFAULT '0000000000'
 );
 
 CREATE TABLE events (
