@@ -1,11 +1,18 @@
-const express = require("express")
-const userEvents = express.Router()
+const express = require("express");
+const usersEvents = express.Router();
 const {
-    createUserEvent,
-    getUserEvents,
-    getUserEventById,
-    updateUserEvent,
-    deleteUserEvent,
-} = require("../queries/userEvents")
+  getAllUsersEvents,
+  getFirstFourUsers,
+} = require("../queries/usersEvents");
 
-//INDEX
+// FIRST FOUR USERS
+usersEvents.get("/firstfour", async (req, res) => {
+  const firstFourUsers = await getFirstFourUsers();
+  if (Array.isArray(firstFourUsers)) {
+    res.status(200).json(firstFourUsers);
+  } else {
+    res.status(400).json({ error: "Server Error" });
+  }
+});
+
+module.exports = usersEvents;

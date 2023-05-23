@@ -13,7 +13,8 @@ CREATE TABLE users (
     about_me TEXT,
     interests TEXT ARRAY,
     intra_extraversion INT DEFAULT 50,
-    phone_number TEXT DEFAULT '0000000000'
+    phone_number TEXT DEFAULT '0000000000',
+    profile_pic TEXT
 );
 
 CREATE TABLE events (
@@ -24,7 +25,15 @@ CREATE TABLE events (
     latitude INT,
     longitude INT,
     organizer_user_id INT,
-    group_id INT
+    group_id INT,
+    event_date TEXT NOT NULL
+    );
+
+CREATE TABLE users_events (
+    user_id INT REFERENCES users (id) ON DELETE CASCADE,
+    event_id INT REFERENCES events (id) ON DELETE CASCADE,
+    pinned BOOLEAN DEFAULT FALSE,
+    rsvp BOOLEAN DEFAULT FALSE
     );
 
 -- CREATE TABLE user_events (
