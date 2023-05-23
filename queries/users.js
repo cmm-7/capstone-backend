@@ -34,10 +34,11 @@ const createUser = async (user) => {
     interests,
     intra_extraversion,
     phone_number,
+    profile_pic,
   } = user;
   try {
     const newUser = await db.one(
-      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
       [
         stytch_id,
         first_name,
@@ -48,6 +49,7 @@ const createUser = async (user) => {
         interests,
         intra_extraversion,
         phone_number,
+        profile_pic,
       ]
     );
     return newUser;
@@ -70,7 +72,7 @@ const deleteUser = async (stytch_id) => {
 };
 
 // UPDATE USER
-const updateUser = async (stytch_id, user) => {
+const updateUser = async (stytch_idParam, user) => {
   const {
     stytch_id,
     first_name,
@@ -81,10 +83,11 @@ const updateUser = async (stytch_id, user) => {
     interests,
     intra_extraversion,
     phone_number,
+    profile_pic,
   } = user;
   try {
     const updatedUser = await db.one(
-      "UPDATE users SET stytch_id=$1, first_name=$2, middle_name=$3, last_name=$4, username=$5, about_me=$6, interests=$7, intra_extraversion=$8, phone_number=$9 WHERE stytch_id=$10 RETURNING *",
+      "UPDATE users SET stytch_id=$1, first_name=$2, middle_name=$3, last_name=$4, username=$5, about_me=$6, interests=$7, intra_extraversion=$8, phone_number=$9, profile_pic=$10 WHERE stytch_id=$11 RETURNING *",
       [
         stytch_id,
         first_name,
@@ -96,6 +99,8 @@ const updateUser = async (stytch_id, user) => {
         intra_extraversion,
         phone_number,
         id,
+        stytch_idParam,
+        profile_pic,
       ]
     );
     return updatedUser;

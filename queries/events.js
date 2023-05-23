@@ -31,10 +31,11 @@ const createEvent = async (event) => {
     longitude,
     organizer_user_id,
     group_id,
+    event_date,
   } = event;
   try {
     const newEvent = await db.oneOrNone(
-      "INSERT INTO events (id, event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      "INSERT INTO events (id, event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
       [
         id,
         event_name,
@@ -44,6 +45,7 @@ const createEvent = async (event) => {
         longitude,
         organizer_user_id,
         group_id,
+        event_date,
       ]
     );
     return newEvent;
@@ -77,10 +79,11 @@ const updateEvent = async (id, event) => {
     longitude,
     organizer_user_id,
     group_id,
+    event_date,
   } = event;
   try {
     const updatedEvent = await db.one(
-      "UPDATE events SET id=$1, event_name=$2, event_description=$3, event_address=$4, latitude=$5, longitude=$6, organizer_user_id=$7, group_id=$8 RETURNING *",
+      "UPDATE events SET event_name=$2, event_description=$3, event_address=$4, latitude=$5, longitude=$6, organizer_user_id=$7, group_id=$8, event_date=$9 WHERE id=$1 RETURNING *",
       [
         id,
         event_name,

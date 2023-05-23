@@ -23,6 +23,9 @@ app.use("/events", eventController);
 const userController = require("./controllers/userController");
 app.use("/users", userController);
 
+const usersEventsContoller = require("./controllers/userEventsController");
+app.use("/usersevents", usersEventsContoller);
+
 // 404 PAGE
 
 app.get("*", (req, res) => {
