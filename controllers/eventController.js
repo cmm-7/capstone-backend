@@ -1,4 +1,5 @@
 const express = require("express");
+const { getEventComments, createComment } = require("../queries/comments");
 const events = express.Router();
 const {
   getAllEvents,
@@ -8,8 +9,8 @@ const {
   updateEvent,
 } = require("../queries/events")
 
-// INDEX
 
+// INDEX
 events.get("/", async (req, res) => {
     const allEvents = await getAllEvents();
     console.log(allEvents);
@@ -31,13 +32,35 @@ events.get("/:id", async (req, res) => {
     }
 })
 
-// CREATE
+events.get("/:id/comments", async (req, res) => {
+    const { id } = req.params;
+    const comments = await getEventComments(id)
+    if (comments) {
+        res.json(comments);
+    } else {
+        res.status(404).json({ error: "not found"})
+    }
+})
 
+// CREATE
 events.post("/", async (req, res) => {
     try {
+        console.log(req.body)
         const event = await createEvent(req.body);
         res.json(event);
     } catch (error) {
+        res.status(400).json({ error })
+    }
+})
+
+events.post("/:id/comments", async (req, res) => {
+    try {
+        console.log(req.body)
+        const {id} = req.params
+        const comment = await createComment(id, req.body);
+        res.json(comment);
+    } catch (error) {
+        console.error(error)
         res.status(400).json({ error })
     }
 })

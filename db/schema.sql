@@ -18,12 +18,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE events (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     event_name TEXT NOT NULL,
     event_description TEXT NOT NULL,
     event_address TEXT NOT NULL, 
-    latitude INT,
-    longitude INT,
+    latitude TEXT,
+    longitude TEXT,
     organizer_user_id INT,
     group_id INT,
     event_date TEXT NOT NULL
@@ -34,6 +34,14 @@ CREATE TABLE users_events (
     event_id INT REFERENCES events (id) ON DELETE CASCADE,
     pinned BOOLEAN DEFAULT FALSE,
     rsvp BOOLEAN DEFAULT FALSE
+    );
+
+    CREATE TABLE comments (
+        id SERIAL PRIMARY KEY,
+        user_id INT,
+        event_id INT,
+        user_comment TEXT,
+        created_at TIMESTAMP
     );
 
 -- CREATE TABLE user_events (

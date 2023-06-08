@@ -23,7 +23,6 @@ const getEvent = async (id) => {
 
 const createEvent = async (event) => {
   const {
-    id,
     event_name,
     event_description,
     event_address,
@@ -35,9 +34,8 @@ const createEvent = async (event) => {
   } = event;
   try {
     const newEvent = await db.oneOrNone(
-      "INSERT INTO events (id, event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+      "INSERT INTO events (event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [
-        id,
         event_name,
         event_description,
         event_address,
