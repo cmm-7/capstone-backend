@@ -6,11 +6,11 @@
 -- INSERT INTO user_events (user_id, event_id)
 -- VALUES (1, 1);
 
-INSERT INTO events (id, event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES
-(1, 'Birthday Party', 'Come celebrate my birthday with me!', '123 Main St, Brooklyn, NY 11235', 37.7749, -122.4194, 1, null, '5/21/2023'),
-(2, 'Charity Fundraiser', 'Help us raise money for a good cause!', '456 Oak St, New York, NY 10001', 37.7749, -122.4194, 2, 1, '5/26/2023'),
-(3, 'Music Festival', 'A weekend of music and fun', '789 Maple St, Astoria, NY 11106', 37.7749, -122.4194, 3, null, '5/28/2023'),
-(4, 'Pursuit Demo Day', '9.2 Nights and Weekends Demo Day', '370 10th Ave, Long Island City, NY 11101', 40.753063,-74.000062, 3, null, '6/27/2023');
+INSERT INTO events (event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES
+('Birthday Party', 'Come celebrate my birthday with me!', '123 Main St, Brooklyn, NY 11235', 37.7749, -122.4194, 1, null, '5/21/2023'),
+('Charity Fundraiser', 'Help us raise money for a good cause!', '456 Oak St, New York, NY 10001', 37.7749, -122.4194, 2, 1, '5/26/2023'),
+('Music Festival', 'A weekend of music and fun', '789 Maple St, Astoria, NY 11106', 37.7749, -122.4194, 3, null, '5/28/2023'),
+('Pursuit Demo Day', '9.2 Nights and Weekends Demo Day', '370 10th Ave, Long Island City, NY 11101', 40.753063,-74.000062, 3, null, '6/27/2023');
 
 INSERT INTO users 
     (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic)
