@@ -1,11 +1,16 @@
 const express = require("express");
-const db = require("./db/dbConfig");
 const cors = require("cors");
+const multer = require("multer")
+
+const path = require('path');
+const uploadsDirectory = path.join(__dirname, '/files');
 
 // CONFIGURATION
 const app = express();
 
 //MIDDLEWARE
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ limit: "25mb", extended: true }));
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to our capstone project backend");
 });
 
+console.log(path.resolve(__dirname, 'files'))
 // EVENTS ROUTES
 
 const eventController = require("./controllers/eventController");
@@ -28,13 +34,19 @@ app.use("/usersevents", usersEventsContoller);
 
 // 404 PAGE
 
+app.use("/files", express.static(uploadsDirectory));
+
 app.get("*", (req, res) => {
   res.status(404).send("Page not found");
 });
+
 
 // app.get("/db", async (req, res) => {
 //   let results = await db.any("SELECT * FROM test");
 //   res.send(results);
 // });
+
+// uploads route
+// app.use( express.static(uploadsDirectory));
 
 module.exports = app;
