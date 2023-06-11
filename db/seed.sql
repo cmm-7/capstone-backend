@@ -64,3 +64,5 @@ VALUES
     (2, 4, FALSE, TRUE),
     (18, 4, FALSE, TRUE);
 
+INSERT INTO comments (user_id, event_id, user_comment, created_at) VALUES 
+(1, 1, 'This was an amazing event!! XD', '2023-06-08T00:28:00.556Z');

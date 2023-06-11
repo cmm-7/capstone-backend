@@ -26,6 +26,9 @@ app.use("/users", userController);
 const usersEventsContoller = require("./controllers/userEventsController");
 app.use("/usersevents", usersEventsContoller);
 
+const commentsController = require("./controllers/commentsController");
+app.use("/comments", commentsController);
+
 // 404 PAGE
 
 app.get("*", (req, res) => {
