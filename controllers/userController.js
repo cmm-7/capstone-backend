@@ -26,7 +26,8 @@ const {
   createUser,
   deleteUser,
   updateUser,
-  updateUserPicture
+  updateUserPicture,
+  getUserStytchID
 
 } = require("../queries/users");
 const { profile } = require('console');
@@ -39,6 +40,17 @@ users.get("/", async (req, res) => {
     res.status(200).json(allUsers);
   } else {
     res.status(500).json({ error: "Server Error" });
+  }
+});
+
+// SHOW
+users.get("/:id/stytch", async (req, res) => {
+  const { id } = req.params;
+  const user = await getUserStytchID(id);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ error: "User not found" });
   }
 });
 
@@ -86,6 +98,8 @@ users.post('/:id/upload', upload.single('profile_pic'), async (req, res) => {
   res.json( updatePicture );
   
 });
+
+
 
 
 
