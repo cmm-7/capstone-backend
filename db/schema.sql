@@ -26,7 +26,8 @@ CREATE TABLE events (
     longitude TEXT,
     organizer_user_id INT,
     group_id INT,
-    event_date TEXT NOT NULL
+    event_date TEXT NOT NULL,
+    category TEXT ARRAY,
     );
 
 CREATE TABLE users_events (

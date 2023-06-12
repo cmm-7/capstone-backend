@@ -9,6 +9,18 @@ const getAllUsersEvents = async () => {
   }
 };
 
+const getAllUsersEventsForOneUser = async (user_id) => {
+  try {
+    const currentUsersEvents = await db.any(
+      "SELECT ue.* FROM users_events ue WHERE ue.user_id = $1",
+      [user_id]
+    );
+    return currentUsersEvents;
+  } catch (error) {
+    return error;
+  }
+};
+
 const getTotalRSVPS = async () => {
   try {
     const totalRSVPS = await db.any(
@@ -56,8 +68,56 @@ const getFirstFourUsers = async () => {
   }
 };
 
+// const createUserEvent = async (event) => {
+//   const { user_id, event_id, pinned, rsvp } = event;
+//   try {
+//     const newUserEvent = await db.oneOrNone(
+//       "INSERT INTO users_events (user_id, event_id, pinned, rsvp) VALUES ($1, $2, $3, $4) RETURNING *",
+//       [user_id, event_id, pinned, rsvp]
+//     );
+//     return newUserEvent;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+const createUserEvent = async (event) => {
+  const { user_id, event_id, pinned, rsvp } = event;
+  try {
+    const existingUserEvent = await db.oneOrNone(
+      "SELECT * FROM users_events WHERE user_id = $1 AND event_id = $2",
+      [user_id, event_id]
+    );
+
+    if (!existingUserEvent) {
+      const newUserEvent = await db.one(
+        "INSERT INTO users_events (user_id, event_id, pinned, rsvp) VALUES ($1, $2, $3, $4) RETURNING *",
+        [user_id, event_id, pinned, rsvp]
+      );
+      return newUserEvent;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteUserEvent = async (event_id, user_id) => {
+  try {
+    const deletedUserEvent = await db.oneOrNone(
+      "DELETE FROM users_events WHERE event_id = $1 AND user_id = $2 RETURNING *",
+      [event_id, user_id]
+    );
+    return deletedUserEvent;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAllUsersEvents,
+  getAllUsersEventsForOneUser,
   getFirstFourUsers,
   getTotalRSVPS,
+  createUserEvent,
+  deleteUserEvent,
 };
