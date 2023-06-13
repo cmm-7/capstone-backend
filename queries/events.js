@@ -34,7 +34,7 @@ const createEvent = async (event) => {
   } = event;
   try {
     const newEvent = await db.oneOrNone(
-      "INSERT INTO events (event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      "INSERT INTO events (event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ) RETURNING *",
       [
         event_name,
         event_description,
@@ -99,10 +99,24 @@ const updateEvent = async (id, event) => {
   }
 };
 
+const updateEventPhotos = async (id, eventPhotoPicPath) => {
+  try {
+    const updatedEvent = await db.one(
+      "UPDATE events SET event_photos=$1 WHERE id=$2 RETURNING *",
+      [eventPhotoPicPath, id]
+    );
+    return updatedEvent;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEvent,
   createEvent,
   deleteEvent,
   updateEvent,
+  updateEventPhotos,
 };

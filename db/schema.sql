@@ -28,7 +28,7 @@ CREATE TABLE events (
     group_id INT,
     event_date TEXT NOT NULL,
     category TEXT ARRAY,
-    images TEXT ARRAY
+    event_photos TEXT
     );
 
 CREATE TABLE users_events (
