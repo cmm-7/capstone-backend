@@ -113,7 +113,9 @@ const updateUser = async (idParam, user) => {
 //UPDATE PROFILE PIC FOR USER
 const updateUserPicture = async (id, path) => {
   const updateUserPicture = await db.one(
-    "UPDATE users SET profile_pic=$1 WHERE id=$2 RETURNING *",
+    `UPDATE users SET profile_pic=$1 WHERE ${
+      id.includes("user") ? "stytch_id=$2" : "id=2"
+    } RETURNING *`,
     [path, id]
   );
 
