@@ -12,7 +12,7 @@ const getAllComments = async () => {
 const getEventComments = async (event_id) => {
   try {
     const allComments = await db.any(
-      "SELECT user_comment, username FROM comments JOIN users ON comments.user_id = users.id WHERE event_id=$1",
+      "SELECT user_comment, username, profile_pic, user_id FROM comments JOIN users ON comments.user_id = users.id WHERE event_id=$1 ORDER BY created_at",
       Number(event_id)
     );
     return allComments;
@@ -38,16 +38,16 @@ const getComment = async (id) => {
 // CREATE
 
 const createComment = async (id, comment) => {
-  const { user_id, user_comment } = comment;
+  const { user_id, user_comment, mood } = comment;
   const created_at = new Date();
 
   try {
     const newComment = await db.oneOrNone(
-      "INSERT INTO comments (user_id, event_id, user_comment, created_at) VALUES ($1, $2, $3, $4) RETURNING *",
-      [user_id, Number(id), user_comment, created_at]
+      "INSERT INTO comments (user_id, event_id, user_comment, created_at, mood) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [user_id, Number(id), user_comment, created_at, mood]
     );
     const commenter = await db.oneOrNone(
-      "SELECT username FROM users WHERE id=$1",
+      "SELECT username, profile_pic FROM users WHERE id=$1",
       [user_id]
     );
     console.log(commenter);
