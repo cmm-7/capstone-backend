@@ -48,10 +48,11 @@ const createUser = async (user) => {
     intra_extraversion,
     phone_number,
     profile_pic,
+    cover_photo
   } = user;
   try {
     const newUser = await db.one(
-      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic, cover_photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
       [
         stytch_id,
         first_name,
@@ -63,6 +64,7 @@ const createUser = async (user) => {
         intra_extraversion,
         phone_number,
         profile_pic,
+        cover_photo
       ]
     );
     return newUser;
@@ -125,11 +127,11 @@ const updateUser = async (id, user) => {
 
 //UPDATE PROFILE PIC FOR USER
 
-const updateUserPicture = async (id, profilePicPath, coverPhotoPath) => {
+const updateUserPicture = async (id, profilePicPath) => {
   try {
     const updatedUser = await db.one(
-      "UPDATE users SET profile_pic=$1, cover_photo=$2 WHERE id=$3 RETURNING *",
-      [profilePicPath, coverPhotoPath, id]
+      "UPDATE users SET profile_pic=$1 WHERE id=$2 RETURNING *",
+      [profilePicPath, id]
     );
 
     return updatedUser;
@@ -139,6 +141,22 @@ const updateUserPicture = async (id, profilePicPath, coverPhotoPath) => {
   }
 };
 
+// UPDATE COVER PHOTO FOR USER
+//UPDATE PROFILE PIC FOR USER
+
+const updateUserCoverPicture = async (id, coverPhotoPicPath) => {
+  try {
+    const updatedUser = await db.one(
+      "UPDATE users SET cover_photo=$1 WHERE id=$2 RETURNING *",
+      [coverPhotoPicPath, id]
+    );
+
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 module.exports = {
   getAllUsers,
@@ -147,5 +165,6 @@ module.exports = {
   deleteUser,
   updateUser,
   updateUserPicture,
-  getUserStytchID
+  getUserStytchID,
+  updateUserCoverPicture
 };
