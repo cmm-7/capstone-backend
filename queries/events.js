@@ -100,10 +100,24 @@ const updateEvent = async (id, event) => {
   }
 };
 
+const updateEventPhotos = async (id, eventPhotoPicPath) => {
+  try {
+    const updatedEvent = await db.one(
+      "UPDATE events SET event_photos=$1 WHERE id=$2 RETURNING *",
+      [eventPhotoPicPath, id]
+    );
+    return updatedEvent;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEvent,
   createEvent,
   deleteEvent,
   updateEvent,
+  updateEventPhotos,
 };
