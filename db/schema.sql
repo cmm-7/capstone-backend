@@ -28,7 +28,8 @@ CREATE TABLE events (
     group_id INT,
     event_date TEXT NOT NULL,
     category TEXT ARRAY,
-    images TEXT ARRAY
+    images TEXT ARRAY,
+    date_created TEXT
     );
 
 CREATE TABLE users_events (
@@ -43,7 +44,8 @@ CREATE TABLE users_events (
         user_id INT,
         event_id INT,
         user_comment TEXT,
-        created_at TIMESTAMP
+        created_at TIMESTAMP,
+        mood TEXT
     );
 
 -- CREATE TABLE user_events (

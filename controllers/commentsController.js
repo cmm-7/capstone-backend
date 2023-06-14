@@ -5,7 +5,7 @@ const {
   createComment,
   deleteComment,
   updateComment,
-} = require("../queries/comments")
+} = require("../queries/comments");
 
 // INDEX
 
@@ -19,7 +19,7 @@ const {
 //     }
 // })
 
-// SHOW 
+// SHOW
 // comments.get("/:id", async (req, res) => {
 //     const { id } = req.params;
 //     const comment = await getComment(id);
@@ -30,24 +30,22 @@ const {
 //     }
 // })
 
-
-
 // DELETE
 comments.delete("/:id", async (req, res) => {
-    const { id } = req.params;
-    const deletedComment = await deleteComment(id);
-    if (comments.id) {
-        res.status(200).json(deletedComment)
-    } else {
-        res.status(400).json("Comment not found")
-    }
-})
+  const { id } = req.params;
+  const deletedComment = await deleteComment(id);
+  if (comments.id) {
+    res.status(200).json(deletedComment);
+  } else {
+    res.status(400).json("Comment not found");
+  }
+});
 
 // UPDATE
 comments.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const updatedComment = await updateComment(id, req.body);
-    res.status(200).json(updatedComment)
+  const { id } = req.params;
+  const updatedComment = await updateComment(id, req.body);
+  res.status(200).json(updatedComment);
 });
 
-module.exports = comments; 
+module.exports = comments;
