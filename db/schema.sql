@@ -10,6 +10,7 @@ CREATE TABLE users (
     middle_name TEXT, 
     last_name TEXT NOT NULL, 
     username TEXT NOT NULL,
+    email TEXT,
     about_me TEXT,
     interests TEXT ARRAY,
     intra_extraversion INT DEFAULT 50,

@@ -1,6 +1,6 @@
-# fly.toml file generated for capstone-backend on 2023-04-30T09:31:34-04:00
+# fly.toml file generated for social-circle-backend on 2023-06-18T16:00:56-04:00
 
-app = "capstone-backend"
+app = "social-circle-backend"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
