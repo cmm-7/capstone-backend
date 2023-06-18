@@ -104,7 +104,7 @@ const updateEventPhotos = async (id, eventPhotoPicPath) => {
   try {
     const updatedEvent = await db.one(
       "UPDATE events SET event_photos=$1 WHERE id=$2 RETURNING *",
-      [eventPhotoPicPath, id]
+      [[eventPhotoPicPath], id]
     );
     return updatedEvent;
   } catch (error) {
