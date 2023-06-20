@@ -127,7 +127,7 @@ events.delete("/:id", async (req, res) => {
   } else {
     res.status(400).json("Event not found");
   }
-});
+;
 
 // UPDATE
 events.put("/:id", async (req, res) => {
