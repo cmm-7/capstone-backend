@@ -49,7 +49,7 @@ events.get("/", async (req, res) => {
   } else {
     res.status(500).json({ error: "server error, can't find events" });
   }
-});
+;
 
 // SHOW
 // SHOW
