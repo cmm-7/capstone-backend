@@ -32,6 +32,12 @@ app.use("/users", userController);
 const usersEventsContoller = require("./controllers/userEventsController");
 app.use("/usersevents", usersEventsContoller);
 
+const commentsController = require("./controllers/commentsController");
+app.use("/comments", commentsController);
+
+const eventInterestsController = require("./controllers/eventInterestsController");
+app.use("/eventinterests", eventInterestsController)
+
 // 404 PAGE
 
 app.use("/files", express.static(uploadsDirectory));
