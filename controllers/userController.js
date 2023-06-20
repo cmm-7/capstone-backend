@@ -2,8 +2,13 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const storage = multer.diskStorage({
+  destination: path.join(__dirname, "../files/"), // Specify the directory where the file will be saved
   destination: path.join(__dirname, "../files/"), // Specify the directory where the file will be saved
   filename: (req, file, cb) => {
     // Generate a unique filename by appending a timestamp to the original file name
@@ -102,13 +107,13 @@ users.post('/:id/upload/cover', upload.single('cover_photo'), async (req, res) =
   const { id } = req.params;
   if (!req.file) {
     // If no file is provided in the request
-    return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
   // Access the uploaded file using req.file
   const uploadedFile = req.file.filename;
 
-  // Process the file as needed (e.g., save file path to the database) 
+  // Process the file as needed (e.g., save file path to the database)
   const filePath = `/files/${uploadedFile}`; // Define the file path
 
   console.log(uploadedFile);
