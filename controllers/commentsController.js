@@ -34,7 +34,7 @@ const {
 comments.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const deletedComment = await deleteComment(id);
-  if (comments.id) {
+  if (deletedComment.id) {
     res.status(200).json(deletedComment);
   } else {
     res.status(400).json("Comment not found");

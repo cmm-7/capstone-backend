@@ -12,7 +12,7 @@ const getAllComments = async () => {
 const getEventComments = async (event_id) => {
   try {
     const allComments = await db.any(
-      "SELECT user_comment, username, profile_pic, user_id FROM comments JOIN users ON comments.user_id = users.id WHERE event_id=$1 ORDER BY created_at",
+      "SELECT comments.id, user_comment, username, profile_pic, user_id, mood FROM comments JOIN users ON comments.user_id = users.id WHERE event_id=$1 ORDER BY created_at",
       Number(event_id)
     );
     return allComments;
