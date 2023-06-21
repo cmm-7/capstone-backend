@@ -1,4 +1,3 @@
-
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
@@ -26,6 +25,8 @@ const {
   deleteUser,
   updateUser,
   updateUserPicture,
+  getUserStytchID,
+  updateUserCoverPicture,
 } = require("../queries/users");
 const { profile } = require("console");
 const { getUserByID } = require("../queries/users");
@@ -65,25 +66,53 @@ users.post("/", async (req, res) => {
 // Update profile route
 const frontendURL = process.env.FRONTEND_URL || "http://localhost:3333";
 
-users.post("/:id/upload", upload.single("profile_pic"), async (req, res) => {
-  const { id } = req.params;
-  if (!req.file) {
-    // If no file is provided in the request
-    return res.status(400).json({ error: "No file uploaded" });
+users.post(
+  "/:id/upload/profile",
+  upload.single("profile_pic"),
+  async (req, res) => {
+    const { id } = req.params;
+    if (!req.file) {
+      // If no file is provided in the request
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    // Access the uploaded file using req.file
+    const uploadedFile = req.file.filename;
+
+    // Process the file as needed (e.g., save file path to the database)
+    const filePath = `/files/${uploadedFile}`; // Define the file path
+
+    console.log(uploadedFile);
+    const staticUrl = `${frontendURL}${filePath}`;
+    const updatePicture = await updateUserPicture(id, staticUrl);
+    console.log(updatePicture);
+    res.json(updatePicture);
   }
+);
 
-  // Access the uploaded file using req.file
-  const uploadedFile = req.file.filename;
+users.post(
+  "/:id/upload/cover",
+  upload.single("cover_photo"),
+  async (req, res) => {
+    const { id } = req.params;
+    if (!req.file) {
+      // If no file is provided in the request
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-  // Process the file as needed (e.g., save file path to the database)
-  const filePath = `/files/${uploadedFile}`; // Define the file path
+    // Access the uploaded file using req.file
+    const uploadedFile = req.file.filename;
 
-  console.log(uploadedFile);
-  const staticUrl = `${frontendURL}${filePath}`;
-  const updatePicture = await updateUserPicture(id, staticUrl);
-  console.log(updatePicture);
-  res.json(updatePicture);
-});
+    // Process the file as needed (e.g., save file path to the database)
+    const filePath = `/files/${uploadedFile}`; // Define the file path
+
+    console.log(uploadedFile);
+    const staticUrl = `${frontendURL}${filePath}`;
+    const updatePicture = await updateUserCoverPicture(id, staticUrl);
+    console.log(updatePicture);
+    res.json(updatePicture);
+  }
+);
 
 // UPDATE
 users.put("/:id", async (req, res) => {

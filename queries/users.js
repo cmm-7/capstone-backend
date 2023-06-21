@@ -122,6 +122,15 @@ const updateUserPicture = async (id, path) => {
   return updateUserPicture;
 };
 
+const updateUserCoverPicture = async (id, path) => {
+  const updateCoverPicture = await db.one(
+    "UPDATE users SET cover_photo=$1 WHERE stytch_id=$2 RETURNING *",
+    [path, id]
+  );
+
+  return updateCoverPicture;
+};
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -129,4 +138,5 @@ module.exports = {
   deleteUser,
   updateUser,
   updateUserPicture,
+  updateUserCoverPicture,
 };
