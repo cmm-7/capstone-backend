@@ -27,7 +27,7 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit the file size to 10MB
 });
 
-const frontEndUrl = process.env.FRONTEND_URL || "http://localhost:3333";
+const frontEndUrl = process.env.BACKEND_URL || "http://localhost:3333";
 
 // INDEX
 events.get("/", async (req, res) => {
