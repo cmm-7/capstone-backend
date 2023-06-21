@@ -24,19 +24,6 @@ const getUser = async (idParam) => {
   }
 };
 
-const getUserStytchID = async (stytch_id) => {
-  try {
-    const user = await db.oneOrNone(
-      "SELECT * FROM users WHERE stytch_id=$1",
-      stytch_id
-    );
-    return user
-  }
-  catch (error) {
-    return error
-  }
-}
-
 // CREATE USER
 const createUser = async (user) => {
   const {
@@ -50,11 +37,10 @@ const createUser = async (user) => {
     intra_extraversion,
     phone_number,
     profile_pic,
-    cover_photo
   } = user;
   try {
     const newUser = await db.one(
-      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic, cover_photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
+      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
       [
         stytch_id,
         first_name,
@@ -66,7 +52,6 @@ const createUser = async (user) => {
         intra_extraversion,
         phone_number,
         profile_pic,
-        cover_photo
       ]
     );
     return newUser;
@@ -137,14 +122,6 @@ const updateUserPicture = async (id, path) => {
   return updateUserPicture;
 };
 
-//UPDATE COVER PIC FOR USER
-const updateUserCoverPicture = async (id, path) => {
-  const updateCoverPicture = await db.one("UPDATE users SET cover_photo=$1 WHERE stytch_id=$2 RETURNING *", [path, id]);
-
-  return updateCoverPicture
-}
-
-
 module.exports = {
   getAllUsers,
   getUser,
@@ -152,6 +129,4 @@ module.exports = {
   deleteUser,
   updateUser,
   updateUserPicture,
-  getUserStytchID,
-  updateUserCoverPicture
 };
