@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS capstone_backend;
-CREATE DATABASE capstone_backend;
+DROP DATABASE IF EXISTS social_circle_backend;
+CREATE DATABASE social_circle_backend;
 
-\c capstone_backend;
+\c social_circle_backend;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -16,7 +16,8 @@ CREATE TABLE users (
     intra_extraversion INT DEFAULT 50,
     phone_number TEXT DEFAULT '0000000000',
     profile_pic TEXT,
-    cover_photo TEXT
+    cover_photo TEXT,
+    friends TEXT ARRAY
 );
 
 CREATE TABLE events (
@@ -41,14 +42,20 @@ CREATE TABLE users_events (
     rsvp BOOLEAN DEFAULT FALSE
     );
 
-    CREATE TABLE comments (
-        id SERIAL PRIMARY KEY,
-        user_id INT,
-        event_id INT,
-        user_comment TEXT,
-        created_at TIMESTAMP,
-        mood TEXT
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    user_id INT,
+    event_id INT,
+    user_comment TEXT,
+    created_at TIMESTAMP,
+    mood TEXT
     );
+
+CREATE TABLE user_friends (
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    friend_id INTEGER NOT NULL REFERENCES users(id),
+    PRIMARY KEY (user_id, friend_id)
+);
 
     CREATE TABLE event_interests (
    event_id INT REFERENCES events (id) ON DELETE CASCADE,

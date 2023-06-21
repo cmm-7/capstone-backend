@@ -38,10 +38,11 @@ const createUser = async (user) => {
     phone_number,
     profile_pic,
     email,
+    friends,
   } = user;
   try {
     const newUser = await db.one(
-      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
+      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic, email, friends) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *",
       [
         stytch_id,
         first_name,
@@ -54,6 +55,7 @@ const createUser = async (user) => {
         phone_number,
         profile_pic,
         email,
+        friends,
       ]
     );
     return newUser;
@@ -87,11 +89,12 @@ const updateUser = async (idParam, user) => {
     intra_extraversion,
     phone_number,
     email,
+    friends,
   } = user;
   try {
     const updatedUser = await db.one(
-      `UPDATE users SET first_name=$1, middle_name=$2, last_name=$3, username=$4, about_me=$5, interests=$6, intra_extraversion=$7, phone_number=$8, email=$9 WHERE ${
-        idParam.includes("user") ? "stytch_id=$10" : "id=$10"
+      `UPDATE users SET first_name=$1, middle_name=$2, last_name=$3, username=$4, about_me=$5, interests=$6, intra_extraversion=$7, phone_number=$8, email=$9, friends=$10 WHERE ${
+        idParam.includes("user") ? "stytch_id=$11" : "id=$11"
       } RETURNING *`,
       [
         first_name,
@@ -103,6 +106,7 @@ const updateUser = async (idParam, user) => {
         intra_extraversion,
         phone_number,
         email,
+        friends,
         idParam,
       ]
     );
@@ -114,12 +118,20 @@ const updateUser = async (idParam, user) => {
   }
 };
 
+const addUsersFriends = async (user_id, friend_id) => {
+  const addUsersFriends = await db.one(
+    `INSERT INTO user_friends (user_id, friend_id)
+        VALUES ($1, $2) RETURNING *;`,
+    [user_id, friend_id]
+  );
+};
+
 //UPDATE PROFILE PIC FOR USER
 const updateUserPicture = async (id, path) => {
   const updateUserPicture = await db.one(
     `UPDATE users SET profile_pic=$1 WHERE ${
       id.includes("user") ? "stytch_id=$2" : "id=2"
-    } RETURNING *`,
+    } RETURNING *;`,
     [path, id]
   );
 

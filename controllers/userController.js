@@ -4,7 +4,11 @@ const path = require("path");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, "../files/"), // Specify the directory where the file will be saved
+  //   path.join(__dirname, "../files/")
+
+  destination: function (req, file, cb) {
+    cb(null, "files/");
+  }, // Specify the directory where the file will be saved
   filename: (req, file, cb) => {
     // Generate a unique filename by appending a timestamp to the original file name
     const timestamp = Date.now();
@@ -64,7 +68,7 @@ users.post("/", async (req, res) => {
 });
 
 // Update profile route
-const frontendURL = process.env.FRONTEND_URL || "http://localhost:3333";
+const frontendURL = process.env.BACKEND_URL;
 
 users.post(
   "/:id/upload/profile",

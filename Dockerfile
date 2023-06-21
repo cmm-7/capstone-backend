@@ -1,6 +1,6 @@
-FROM debian:bullseye as builder
+FROM postgres:15-bullseye as builder
 
-ARG NODE_VERSION=18.3.0
+ARG NODE_VERSION=18.0.0
 
 RUN apt-get update; apt install -y curl python-is-python3 pkg-config build-essential
 RUN curl https://get.volta.sh | bash
@@ -22,7 +22,10 @@ ENV NODE_ENV production
 COPY . .
 
 RUN npm install
-FROM debian:bullseye
+ENV DATABASE_URL postgres://postgres:tAU8CvJdBatVftA@social-circle-backend-db.internal:5432
+RUN npm run db:init && npm run db:seed
+
+FROM postgres:15-bullseye
 
 LABEL fly_launch_runtime="nodejs"
 

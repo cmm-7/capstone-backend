@@ -78,13 +78,12 @@ const updateEvent = async (id, event) => {
     event_address,
     latitude,
     longitude,
-    organizer_user_id,
     group_id,
     event_date,
   } = event;
   try {
     const updatedEvent = await db.one(
-      "UPDATE events SET event_name=$2, event_description=$3, event_address=$4, latitude=$5, longitude=$6, organizer_user_id=$7, group_id=$8, event_date=$9 WHERE id=$1 RETURNING *",
+      "UPDATE events SET event_name=$2, event_description=$3, event_address=$4, latitude=$5, longitude=$6, group_id=$7, event_date=$8 WHERE id=$1 RETURNING *",
       [
         id,
         event_name,
@@ -92,12 +91,13 @@ const updateEvent = async (id, event) => {
         event_address,
         latitude,
         longitude,
-        organizer_user_id,
         group_id,
+        event_date,
       ]
     );
     return updatedEvent;
   } catch (error) {
+    console.log(error);
     return error;
   }
 };
