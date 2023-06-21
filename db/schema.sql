@@ -14,7 +14,8 @@ CREATE TABLE users (
     interests TEXT ARRAY,
     intra_extraversion INT DEFAULT 50,
     phone_number TEXT DEFAULT '0000000000',
-    profile_pic TEXT
+    profile_pic TEXT,
+    cover_photo TEXT
 );
 
 CREATE TABLE events (
@@ -47,6 +48,12 @@ CREATE TABLE users_events (
         created_at TIMESTAMP,
         mood TEXT
     );
+
+CREATE TABLE event_interests (
+  event_id INT REFERENCES events (id) ON DELETE CASCADE,
+  category TEXT,
+  PRIMARY KEY (event_id, category)
+);
 
 -- CREATE TABLE user_events (
 --     user_id INT NOT NULL,

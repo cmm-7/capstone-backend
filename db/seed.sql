@@ -12,6 +12,7 @@ INSERT INTO events (event_name, event_description, event_address, latitude, long
 ('Music Festival', 'A weekend of music and fun', '789 Maple St, Astoria, NY 11106', 37.7749, -122.4194, 3, null, '5/28/2023'),
 ('Pursuit Demo Day', '9.2 Nights and Weekends Demo Day', '370 10th Ave, Long Island City, NY 11101', 40.753063,-74.000062, 3, null, '6/27/2023');
 
+
 INSERT INTO users 
     (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic)
 VALUES 
@@ -66,3 +67,11 @@ VALUES
 
 INSERT INTO comments (user_id, event_id, user_comment, created_at) VALUES 
 (1, 1, 'This was an amazing event!! XD', '2023-06-08T00:28:00.556Z');
+
+INSERT INTO event_interests (event_id, category) VALUES
+  (1, 'Music'),
+  (1, 'Celebration'),
+  (2, 'Charity'),
+  (2, 'Fundraiser'),
+  (3, 'Music'),
+  (3, 'Festival');
