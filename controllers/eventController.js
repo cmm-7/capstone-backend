@@ -2,9 +2,6 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const { getEventComments, createComment } = require("../queries/comments");
-const multer = require("multer");
-const path = require("path");
-const { getEventComments, createComment } = require("../queries/comments");
 const events = express.Router();
 const {
   getAllEvents,
@@ -30,7 +27,7 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit the file size to 10MB
 });
 
-const frontEndUrl = "http://localhost:3333";
+const frontEndUrl = process.env.FRONTEND_URL || 'http://localhost:3333';
 
 // INDEX
 events.get("/", async (req, res) => {
@@ -42,13 +39,7 @@ events.get("/", async (req, res) => {
     res.status(500).json({ error: "server error, can't find events" });
   }
 });
-  const allEvents = await getAllEvents();
-  console.log(allEvents);
-  if (Array.isArray(allEvents)) {
-    res.status(200).json(allEvents);
-  } else {
-    res.status(500).json({ error: "server error, can't find events" });
-  }
+
 ;
 
 // SHOW
@@ -120,13 +111,7 @@ events.delete("/:id", async (req, res) => {
     res.status(400).json("Event not found");
   }
 });
-  const { id } = req.params;
-  const deletedEvent = await deleteEvent(id);
-  if (deletedSnack.id) {
-    res.status(200).json(deletedEvent);
-  } else {
-    res.status(400).json("Event not found");
-  }
+
 ;
 
 // UPDATE

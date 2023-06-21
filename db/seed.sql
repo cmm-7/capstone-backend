@@ -26,7 +26,7 @@ VALUES
     ('id8', 'Frank', 'R.', 'Miller', 'frankmiller', 'I am a professional swimmer', ARRAY ['swimming', 'sports'], 70, '6677889900', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
     ('id9', 'Grace', NULL, 'Wilson', 'gracewilson', 'I love animals and nature', ARRAY ['animals', 'nature'], 80, '7788990011', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'),
     ('id10', 'Henry', 'T.', 'Moore', 'henrymoore', 'I am a movie enthusiast', ARRAY ['movies', 'theater'], 90, '8899001122', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
-    ('id10', 'Henry', 'T.', 'Moore', 'henrymoore', 'I am a movie enthusiast', ARRAY['movies', 'theater'], 90, '8899001122', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
+    ('id20', 'Henry', 'T.', 'Moore', 'henrymoore', 'I am a movie enthusiast', ARRAY['movies', 'theater'], 90, '8899001122', 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
     ('id11', 'John', 'D.', 'Smith', 'johnsmith', 'I love traveling and photography', ARRAY['travel', 'photography'], 70, '1122334455', 'https://cdn-icons-png.flaticon.com/512/3135/3135723.png'),
     ('id12', 'Emily', 'J.', 'Johnson', 'emilyjohnson', 'Passionate about cooking and baking', ARRAY['cooking', 'baking'], 80, '2233445566', 'https://cdn-icons-png.flaticon.com/512/3135/3135714.png'),
     ('id13', 'Michael', 'R.', 'Brown', 'michaelbrown', 'Fitness enthusiast and sports lover', ARRAY['fitness', 'sports'], 60, '3344556677', 'https://cdn-icons-png.flaticon.com/512/3135/3135716.png'),

@@ -1,14 +1,11 @@
-const express = require("express");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, "../files/"), // Specify the directory where the file will be saved
+  
   destination: path.join(__dirname, "../files/"), // Specify the directory where the file will be saved
   filename: (req, file, cb) => {
     // Generate a unique filename by appending a timestamp to the original file name
