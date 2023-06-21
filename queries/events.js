@@ -113,6 +113,19 @@ const updateEventPhotos = async (id, eventPhotoPicPath) => {
   }
 };
 
+const updateEventCategories = async (id, categories) => {
+  try {
+    const updatedEvent = await db.one(
+      "UPDATE events SET categories=$1 WHERE id=$2 RETURNING *",
+      [categories, id]
+    );
+    return updatedEvent;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEvent,

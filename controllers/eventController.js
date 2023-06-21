@@ -26,7 +26,7 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, // Limit the file size to 10MB
 });
 
-const frontEndUrl = "http://localhost:3333";
+const frontEndUrl = process.env.FRONTEND_URL || 'http://localhost:3333';
 
 // INDEX
 events.get("/", async (req, res) => {
@@ -38,6 +38,7 @@ events.get("/", async (req, res) => {
     res.status(500).json({ error: "server error, can't find events" });
   }
 });
+
 
 // SHOW
 events.get("/:id", async (req, res) => {
@@ -106,6 +107,7 @@ events.delete("/:id", async (req, res) => {
     res.status(400).json("Event not found");
   }
 });
+
 
 // UPDATE
 events.put("/:id", async (req, res) => {
