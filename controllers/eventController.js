@@ -10,7 +10,6 @@ const {
   deleteEvent,
   updateEvent,
   updateEventPhotos,
-  updateEventCategories,
 } = require("../queries/events");
 
 const storage = multer.diskStorage({
@@ -40,9 +39,7 @@ events.get("/", async (req, res) => {
   }
 });
 
-;
 
-// SHOW
 // SHOW
 events.get("/:id", async (req, res) => {
   const { id } = req.params;
@@ -69,7 +66,6 @@ events.post("/", async (req, res) => {
   try {
     const event = await createEvent(req.body);
     res.json(event);
-    console.log(req.body)
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -112,19 +108,12 @@ events.delete("/:id", async (req, res) => {
   }
 });
 
-;
 
 // UPDATE
 events.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date, category } = req.body;
-  const updatedEvent = await updateEvent(id, { event_name, event_description, event_address, latitude, longitude, organizer_user_id, group_id, event_date });
-  
-  // Update event categories
-  if (Array.isArray(category)) {
-    await updateEventCategories(id, category);
-  }
-
+  const updatedEvent = await updateEvent(id, req.body);
   res.status(200).json(updatedEvent);
 });
+
 module.exports = events;
