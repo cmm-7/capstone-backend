@@ -66,3 +66,10 @@ VALUES
 
 INSERT INTO comments (user_id, event_id, user_comment, created_at) VALUES 
 (1, 1, 'This was an amazing event!! XD', '2023-06-08T00:28:00.556Z');
+
+INSERT INTO event_interests (event_id, category) VALUES
+   (1, 'Music'),
+   (1, 'Celebration'),
+   (2, 'Charity'),
+   (2, 'Fundraiser'),
+   (3, 'Music');
