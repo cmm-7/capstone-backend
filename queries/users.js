@@ -58,6 +58,7 @@ const createUser = async (user) => {
         friends,
       ]
     );
+    console.log(newUser);
     return newUser;
   } catch (error) {
     throw error;

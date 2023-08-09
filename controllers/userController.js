@@ -60,6 +60,7 @@ users.get("/:id", async (req, res) => {
 // CREATE
 users.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     const user = await createUser(req.body);
     res.status(201).json(user);
   } catch (error) {
