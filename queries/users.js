@@ -26,24 +26,28 @@ const getUser = async (idParam) => {
 
 // CREATE USER
 const createUser = async (user) => {
-  const {
-    stytch_id,
-    first_name,
-    middle_name,
-    last_name,
-    username,
-    about_me,
-    interests,
-    intra_extraversion,
-    phone_number,
-    profile_pic,
-    email,
-    friends,
-  } = user;
   try {
+    const {
+      stytch_id,
+      first_name,
+      middle_name,
+      last_name,
+      username,
+      about_me,
+      interests,
+      intra_extraversion,
+      phone_number,
+      profile_pic,
+      email,
+      friends,
+    } = user;
+
+    const intraExtraversionValue =
+      intra_extraversion === "" ? null : parseInt(intra_extraversion);
+
     const newUser = await db.one(
-      "INSERT INTO users (stytch_id, first_name, middle_name, last_name, username, about_me, interests, intra_extraversion, phone_number, profile_pic, email, friends) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *",
-      [
+      `
+      INSERT INTO users (
         stytch_id,
         first_name,
         middle_name,
@@ -55,12 +59,33 @@ const createUser = async (user) => {
         phone_number,
         profile_pic,
         email,
+        friends
+      )
+      VALUES (
+        $1, $2, $3, $4, $5,
+        $6, $7, $8, $9,
+        $10, $11, $12
+      )
+      RETURNING *
+    `,
+      [
+        stytch_id,
+        first_name,
+        middle_name,
+        last_name,
+        username,
+        about_me,
+        interests,
+        intraExtraversionValue, // 👈 fixed here
+        phone_number,
+        profile_pic,
+        email,
         friends,
       ]
     );
-    console.log(newUser);
     return newUser;
   } catch (error) {
+    console.error("CREATE USER ERROR:", error);
     throw error;
   }
 };
@@ -92,6 +117,7 @@ const updateUser = async (idParam, user) => {
     email,
     friends,
   } = user;
+
   try {
     const updatedUser = await db.one(
       `UPDATE users SET first_name=$1, middle_name=$2, last_name=$3, username=$4, about_me=$5, interests=$6, intra_extraversion=$7, phone_number=$8, email=$9, friends=$10 WHERE ${
@@ -127,7 +153,7 @@ const addUsersFriends = async (user_id, friend_id) => {
   );
 };
 
-//UPDATE PROFILE PIC FOR USER
+// UPDATE PROFILE PIC FOR USER
 const updateUserPicture = async (id, path) => {
   const updateUserPicture = await db.one(
     `UPDATE users SET profile_pic=$1 WHERE ${
