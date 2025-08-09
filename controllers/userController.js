@@ -60,11 +60,12 @@ users.get("/:id", async (req, res) => {
 // CREATE
 users.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+    console.log("Request body:", req.body);
     const user = await createUser(req.body);
     res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: "Bad Request" });
+    console.error("CREATE USER ERROR:", error);
+    res.status(400).json({ error: error.message });
   }
 });
 
