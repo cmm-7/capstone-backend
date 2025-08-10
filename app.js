@@ -53,6 +53,33 @@ app.use("/eventinterests", eventInterestsController);
 
 app.use("/files", express.static(uploadsDirectory));
 
+// Lightweight DB health and diagnostics endpoint
+app.get("/health/db", async (req, res) => {
+  try {
+    const meta = await db.one(
+      "SELECT current_database() AS db, now() AS time"
+    );
+    const tables = await db.any(
+      "SELECT table_name FROM information_schema.tables WHERE table_schema='public' ORDER BY table_name"
+    );
+    let usersCount = null;
+    try {
+      const { count } = await db.one("SELECT COUNT(*) FROM users");
+      usersCount = Number(count);
+    } catch (err) {
+      usersCount = null;
+    }
+    res.json({
+      database: meta.db,
+      time: meta.time,
+      tables: tables.map((t) => t.table_name),
+      usersCount,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "DB health check failed", details: String(error) });
+  }
+});
+
 app.get("*", (req, res) => {
   res.status(404).send("Page not found");
 });
